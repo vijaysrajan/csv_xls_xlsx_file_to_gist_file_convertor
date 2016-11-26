@@ -1,0 +1,9 @@
+Dates:d:string:t
+Category:d:string:t
+Descript:d:string:t
+DayOfWeek:d:string:t
+PdDistrict:d:string:t
+Resolution:d:string:t
+Address:d:string:t
+X:d:string:t
+Y:d:string:t
