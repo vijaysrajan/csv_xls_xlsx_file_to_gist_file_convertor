@@ -31,8 +31,24 @@ public class AppTest
     /**
      * Rigourous Test :-)
      */
-    public void testApp()
+    public void testApp_SimpleTestCase()
     {
-        assertTrue( true );
+    	String csvFile  = "simpleTestCase.csv";
+    	String schema   = "schemaFile_simpleTestCase";
+    	String dataFile = "dataFile_simpleTestCase";
+    	String badDataFile = "badDataFileCase_simpleTestCase";
+    	try {
+    		GistCSVConvertor gistFileFormatter = new GistCSVConvertor (csvFile, schema, dataFile, badDataFile, "UTF-8");
+    		gistFileFormatter.writeToGistFormat();
+    		//check if schema File is of expected length
+    		//check if dataFile is of expected length
+    		//check if badDataFile is of expected length
+    		//check contents of full schema file
+    		//check contents of full dataFile file
+    		//check contents of full badDataFile file
+    		assertTrue( true );
+    	} catch (Exception e) {
+    		assertTrue( false );
+    	}
     }
 }
