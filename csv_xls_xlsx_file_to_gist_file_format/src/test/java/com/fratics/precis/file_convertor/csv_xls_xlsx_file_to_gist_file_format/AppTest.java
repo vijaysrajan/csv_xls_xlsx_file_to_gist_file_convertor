@@ -31,15 +31,36 @@ public class AppTest
     /**
      * Rigourous Test :-)
      */
-    public void testApp_SimpleTestCase()
+    public void testApp_SimpleTestCaseComma()
     {
-    	String csvFile  = "simpleTestCase.csv";
-    	String schema   = "schemaFile_simpleTestCase";
-    	String dataFile = "dataFile_simpleTestCase";
-    	String badDataFile = "badDataFileCase_simpleTestCase";
+    	String csvFile  = "simpleTestCaseComma.csv";
+    	String schema   = "schemaFile_simpleTestCaseComma";
+    	String dataFile = "dataFile_simpleTestCaseComma";
+    	String badDataFile = "badDataFileCase_simpleTestCaseComma";
     	try {
-    		GistCSVConvertor gistFileFormatter = new GistCSVConvertor (csvFile, schema, dataFile, badDataFile, "UTF-8");
-    		gistFileFormatter.writeToGistFormat();
+    		GistCSVConvertor gistFileFormatter = new GistCSVConvertor (csvFile, dataFile, schema, badDataFile, "UTF-8");
+    		gistFileFormatter.writeToGistFormat(',');
+    		//check if schema File is of expected length
+    		//check if dataFile is of expected length
+    		//check if badDataFile is of expected length
+    		//check contents of full schema file
+    		//check contents of full dataFile file
+    		//check contents of full badDataFile file
+    		assertTrue( true );
+    	} catch (Exception e) {
+    		assertTrue( false );
+    	}
+    }
+    
+    public void testApp_SimpleTestCasePipe()
+    {
+    	String csvFile  = "simpleTestCasePipe.csv";
+    	String schema   = "schemaFile_simpleTestCasePipe";
+    	String dataFile = "dataFile_simpleTestCasePipe";
+    	String badDataFile = "badDataFileCase_simpleTestCasePipe";
+    	try {
+    		GistCSVConvertor gistFileFormatter = new GistCSVConvertor (csvFile,dataFile, schema, badDataFile, "UTF-8");
+    		gistFileFormatter.writeToGistFormat('|');
     		//check if schema File is of expected length
     		//check if dataFile is of expected length
     		//check if badDataFile is of expected length

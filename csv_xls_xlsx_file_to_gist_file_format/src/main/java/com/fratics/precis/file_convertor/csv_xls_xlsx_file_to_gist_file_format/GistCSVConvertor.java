@@ -53,12 +53,12 @@ public class GistCSVConvertor {
 		StringBuilder schemaStrBuilder = new StringBuilder(); 
 		for (int i = 0; i < elements.length;i++  ) {
 			schemaStrBuilder.append(elements[i]);
-			schemaStrBuilder.append(":");
-			schemaStrBuilder.append("d");
-			schemaStrBuilder.append(":");
-			schemaStrBuilder.append("string");
-			schemaStrBuilder.append(":");
-			schemaStrBuilder.append("t");
+			schemaStrBuilder.append(Constants.SCHEMA_SEPARATOR);
+			schemaStrBuilder.append(Constants.DEFAULT_SCHEMA_FIELD_TYPE);
+			schemaStrBuilder.append(Constants.SCHEMA_SEPARATOR);
+			schemaStrBuilder.append(Constants.DEFAULT_SCHEMA_FIELD_DATA_TYPE);
+			schemaStrBuilder.append(Constants.SCHEMA_SEPARATOR);
+			schemaStrBuilder.append(Constants.DEFAULT_SCHEMA_FIELD_INCLUSION);
 			schemaStrBuilder.append("\n");
 		}
 		schemaWriter.write(schemaStrBuilder.toString());
@@ -77,11 +77,13 @@ public class GistCSVConvertor {
 		buildLine.delete(0, buildLine.length());
 	}
 	
-	private void writeLineToBadDataFile(String [] elements) {
+	private void writeLineToBadDataFile(String [] elements, int lineNum, char dataSeparator) {
 		StringBuffer buildLine = new StringBuffer();
+		buildLine.append(lineNum);
+		buildLine.append(dataSeparator);
 		for (int i = 0; i < (elements.length -1);i++  ) {
 			buildLine.append(elements[i]);
-			buildLine.append(Constants.SEPARATOR_STR);
+			buildLine.append(dataSeparator);
 		}
 		buildLine.append(elements[elements.length - 1]);
 		badDataWriter.println(buildLine.toString());
@@ -94,14 +96,14 @@ public class GistCSVConvertor {
 		badDataWriter.close();
 	}
 	
-	public void writeToGistFormat () throws BadHeaderException{
+	public void writeToGistFormat (char dataSeparator) throws BadHeaderException{
         //read file line by line
         try {
     		String [] elements = null;	
     		int lineNum = 0;
     		int numberOfHeaderFields = 0;
         	try {
-        		dataCSVReader = new CSVReader(new FileReader(csvFile),',',Constants.QUOTE_CHR,Constants.ESCAPE_CHR);
+        		dataCSVReader = new CSVReader(new FileReader(csvFile),dataSeparator,Constants.QUOTE_CHR,Constants.ESCAPE_CHR);
         		while ((elements = dataCSVReader.readNext()) != null) {
         			lineNum++;
         			if (lineNum == 1) {
@@ -114,7 +116,7 @@ public class GistCSVConvertor {
         				if (numberOfHeaderFields == elements.length) {
         					writeLineToDataFile(elements);
         				} else {
-        					writeLineToBadDataFile(elements);
+        					writeLineToBadDataFile(elements,lineNum,dataSeparator);
         				}
         			}
         		} 
@@ -132,51 +134,6 @@ public class GistCSVConvertor {
 	
 	public static void main(String [] args) throws Exception {
 		GistCSVConvertor gistFileFormatter = new GistCSVConvertor (args[0], args[1], args[2], args[3], "UTF-8");
-		gistFileFormatter.writeToGistFormat();
+		gistFileFormatter.writeToGistFormat(',');
 	}
-	
-
 }
-
-
-
-
-//public void writeToGistFormat2 () {
-//
-//    //read file line by line
-//    try {
-//
-//    	//CSVParser csvParser = new CSVParser(',','"');
-//    	//CSVReader csvReader = new CSVReader(new FileReader(csvFile),0, csvParser);
-//    	//CSVReader csvReader = new CSVReader(new FileReader(csvFile),',','\"','\\');        	
-//    	//CSVReader csvReader = new CSVReader(new StringReader("value1, value2, value3, value4, \"value5, 1234\", " +
-//	    //  "value6, value7, \"value8\", value9, \"value10, 123.23\""));
-//
-//    	//read file line by line
-//    	PrintWriter writer = new PrintWriter("dataFile.txt", "UTF-8");
-//        BufferedReader br = new BufferedReader(new FileReader(csvFile));
-//        String line;
-//        while ((line = br.readLine()) != null) {
-//        	//System.out.println(line);
-//            CSVReader csvReader = new CSVReader(new StringReader(line));//,',','"');
-//            String [] elements = null;
-//            StringBuffer buildLine = new StringBuffer();
-//            while ((elements = csvReader.readNext()) != null) {
-//            	for (int i = 0; i < (elements.length -1);i++  ) {
-//            		buildLine.append(elements[i]);
-//            		buildLine.append(Constants.SEPARATOR_STR);
-//            	}
-//            	buildLine.append(elements[elements.length - 1]);
-//            	writer.println(buildLine.toString());
-//            	buildLine.delete(0, buildLine.length());    
-//             }
-//             csvReader.close();	
-//            }
-//        	br.close();
-//        	writer.close();
-//    	
-//    } catch (IOException ioe) {
-//        System.out.println(ioe);
-//        ioe.printStackTrace();
-//    }
-//}
