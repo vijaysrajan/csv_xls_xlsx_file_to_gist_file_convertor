@@ -66,28 +66,28 @@ public class GistCSVConvertor {
 		return elements.length;
 	}
 	
+	StringBuffer buildLine = new StringBuffer();
 	private void writeLineToDataFile(String [] elements) {
-		StringBuffer buildLine = new StringBuffer();
 		for (int i = 0; i < (elements.length -1);i++  ) {
-			buildLine.append(elements[i]);
-			buildLine.append(Constants.SEPARATOR_STR);
+			this.buildLine.append(elements[i]);
+			this.buildLine.append(Constants.SEPARATOR_STR);
 		}
-		buildLine.append(elements[elements.length - 1]);
-		dataWriter.println(buildLine.toString());
-		buildLine.delete(0, buildLine.length());
+		this.buildLine.append(elements[elements.length - 1]);
+		dataWriter.println(this.buildLine.toString());
+		this.buildLine.delete(0, this.buildLine.length());
 	}
 	
+	StringBuffer buildLine2 = new StringBuffer();
 	private void writeLineToBadDataFile(String [] elements, int lineNum, char dataSeparator) {
-		StringBuffer buildLine = new StringBuffer();
-		buildLine.append(lineNum);
-		buildLine.append(dataSeparator);
+		this.buildLine2.append(lineNum);
+		this.buildLine2.append(dataSeparator);
 		for (int i = 0; i < (elements.length -1);i++  ) {
-			buildLine.append(elements[i]);
-			buildLine.append(dataSeparator);
+			this.buildLine2.append(elements[i]);
+			this.buildLine2.append(dataSeparator);
 		}
-		buildLine.append(elements[elements.length - 1]);
-		badDataWriter.println(buildLine.toString());
-		buildLine.delete(0, buildLine.length());
+		this.buildLine2.append(elements[elements.length - 1]);
+		badDataWriter.println(this.buildLine2.toString());
+		this.buildLine2.delete(0, this.buildLine2.length());
 	}
 	
 	private void closeAll() throws IOException{
